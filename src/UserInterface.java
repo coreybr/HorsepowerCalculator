@@ -47,7 +47,6 @@ public class UserInterface implements Runnable {
         container.add(crankLabel);
         
         JFormattedTextField crankField = new JFormattedTextField(formatter);
-//        crankField.setValue(0);
         container.add(crankField);
         
         //TODO: Make this Drivetrain label when layout is refactored
