@@ -49,8 +49,10 @@ public class UserInterface implements Runnable {
         JFormattedTextField crankField = new JFormattedTextField(formatter);
         container.add(crankField);
         
-        //TODO: Make this Drivetrain label when layout is refactored
-        JLabel driveTrainLabel = new JLabel("");
+        container.add(new JLabel());
+        container.add(new JLabel());
+        
+        JLabel driveTrainLabel = new JLabel("Drivetrain:");
         container.add(driveTrainLabel);
         
         JRadioButton fwd = new JRadioButton("FWD");
@@ -77,12 +79,16 @@ public class UserInterface implements Runnable {
         container.add(auto);
         container.add(manual);
         
+        container.add(new JLabel());
+        
         JLabel wheelLabel = new JLabel("Wheel HP:");
         container.add(wheelLabel);
         
         JFormattedTextField wheelField = new JFormattedTextField(formatter);
         wheelField.setEditable(false);
         container.add(wheelField);
+        
+        container.add(new JLabel());
         
         JButton calculateButton = new JButton("Calculate");
         container.add(calculateButton);
