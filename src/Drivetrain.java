@@ -1,4 +1,6 @@
-
+/*
+ * Enum of drivetrain options and their estimated loss percentages.
+ */
 public enum Drivetrain {
 	FWD(15), RWD(18), AWD(25);
 	private int lossPercentage;

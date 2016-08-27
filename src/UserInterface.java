@@ -1,3 +1,6 @@
+/*
+ * Class which handles GUI.
+ */
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -14,6 +17,7 @@ public class UserInterface implements Runnable {
 		this.version = version;
 	}
 
+    //Initiate GUI
 	@Override
     public void run() {
         frame = new JFrame("Horsepower Calculator v" + version);
@@ -27,6 +31,7 @@ public class UserInterface implements Runnable {
         frame.setVisible(true);
     }
 
+	//Define GUI content
     private void createComponents(Container container) {
     	//Setup layout
         GridLayout layout = new GridLayout(4,4);
@@ -42,7 +47,11 @@ public class UserInterface implements Runnable {
         // Commit value on each keystroke instead of focus lost
         formatter.setCommitsOnValidEdit(true);
         
-        //Setup GUI elements
+        /*
+         * Setup GUI elements
+         */
+        
+        //Row 1 - Crank HP input
         JLabel crankLabel = new JLabel("Crank HP:");
         container.add(crankLabel);
         
@@ -52,6 +61,7 @@ public class UserInterface implements Runnable {
         container.add(new JLabel());
         container.add(new JLabel());
         
+        //Row 2 - Drivetrain radio buttons
         JLabel driveTrainLabel = new JLabel("Drivetrain:");
         container.add(driveTrainLabel);
         
@@ -67,6 +77,8 @@ public class UserInterface implements Runnable {
         container.add(rwd);
         container.add(awd);
         
+        
+        //Row 3 - Transmission radio buttons
         JLabel transmissionLabel = new JLabel("Transmission:");
         container.add(transmissionLabel);
         
@@ -81,6 +93,7 @@ public class UserInterface implements Runnable {
         
         container.add(new JLabel());
         
+        //Row 4 - Wheel HP output and Calculate button
         JLabel wheelLabel = new JLabel("Wheel HP:");
         container.add(wheelLabel);
         
@@ -92,6 +105,10 @@ public class UserInterface implements Runnable {
         
         JButton calculateButton = new JButton("Calculate");
         container.add(calculateButton);
+        
+        /*
+         * End: Setup GUI elements
+         */
         
         //Select Default Options
         rwd.doClick();

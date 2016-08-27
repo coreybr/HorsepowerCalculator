@@ -1,3 +1,6 @@
+/*
+ * Class which performs calculations. 
+ */
 import javax.swing.JFormattedTextField;
 import javax.swing.JRadioButton;
 
@@ -11,6 +14,9 @@ public class Calculator {
 	private JFormattedTextField wheelHorsepower;
 	private static final int AUTOMATIC_LOSS = 5;
 
+	/*
+	 * Constructor takes GUI input.
+	 */
 	public Calculator(JFormattedTextField crankHorsepower, JRadioButton auto, JRadioButton fwd, JRadioButton rwd,
 			JFormattedTextField wheelHorsepower) {
 		this.crankHorsepower = crankHorsepower;
@@ -20,23 +26,24 @@ public class Calculator {
 		this.wheelHorsepower = wheelHorsepower;
 	}
 
+	/*
+	 * Main calculate function called by Calculate button.
+	 */
 	public void calculate() {
 
-		/*
-		 * Reference: FWD: 10-15% loss; RWD: 10-18% loss; AWD: 17-25% loss.
-		 * Automatic: +2-5% loss
-		 *
-		 * Current calculations use most conservative numbers (biggest losses)
-		 */
+		//Empty crank HP = 0
 		if (crankHorsepower.getText().isEmpty()) {
 			crankHorsepower.setValue(0);
 		}
+		
+		//Retrieve crank HP value
 		int crankHorsepowerValue = (int) crankHorsepower.getValue();
 		
-		// HP is minimum 0
+		//Set crank HP to 0 at minimum
 		crankHorsepowerValue = Math.max(0, crankHorsepowerValue);
 
-		// Determine selected driveTrain
+		//Determine selected driveTrain
+		//(We are assuming there is one as we select a default)
 		if (fwd.isSelected()) {
 			this.selectedDrivetrain = Drivetrain.FWD;
 		} else if (rwd.isSelected()) {
@@ -44,14 +51,21 @@ public class Calculator {
 		} else {
 			this.selectedDrivetrain = Drivetrain.AWD;
 		}
-
+		
+		//Calculate loss percentage for selected drivetrain
 		int loss = selectedDrivetrain.getLossPercentage();
+		
+		//If automatic transmission is selected, add additional loss percentage.
 		if (auto.isSelected()) {
 			loss += AUTOMATIC_LOSS;
 		}
+		
+		//Calculate wheel HP by calculating and subtracting drivetrain losses.
 		double percentLoss = loss / 100.0;
 		double powerLost = percentLoss * crankHorsepowerValue;
 		double result = crankHorsepowerValue - powerLost;
+
+		//Return result to interface
 		this.wheelHorsepower.setValue(result);
 	}
 }
