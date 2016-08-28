@@ -21,7 +21,7 @@ public class UserInterface implements Runnable {
 	@Override
     public void run() {
         frame = new JFrame("Horsepower Calculator v" + version);
-        frame.setPreferredSize(new Dimension(370, 170));
+        frame.setPreferredSize(new Dimension(440, 170));
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,15 +51,21 @@ public class UserInterface implements Runnable {
          * Setup GUI elements
          */
         
-        //Row 1 - Crank HP input
-        JLabel crankLabel = new JLabel("Crank HP:");
-        container.add(crankLabel);
+        //Row 1 - Horsepower input with crank/wheel radio buttons
+        JLabel horsepowerLabel = new JLabel("Horsepower:");
+        container.add(horsepowerLabel);
         
-        JFormattedTextField crankField = new JFormattedTextField(formatter);
-        container.add(crankField);
+        JFormattedTextField horsepowerField = new JFormattedTextField(formatter);
+        container.add(horsepowerField);
         
-        container.add(new JLabel());
-        container.add(new JLabel());
+        JRadioButton crank = new JRadioButton("at the Crank");
+        JRadioButton wheel = new JRadioButton("at the Wheels");
+
+        ButtonGroup horsepowerGroup = new ButtonGroup();
+        horsepowerGroup.add(crank);
+        horsepowerGroup.add(wheel);
+        container.add(crank);
+        container.add(wheel);
         
         //Row 2 - Drivetrain radio buttons
         JLabel driveTrainLabel = new JLabel("Drivetrain:");
@@ -93,15 +99,16 @@ public class UserInterface implements Runnable {
         
         container.add(new JLabel());
         
-        //Row 4 - Wheel HP output and Calculate button
-        JLabel wheelLabel = new JLabel("Wheel HP:");
-        container.add(wheelLabel);
+        //Row 4 - Horsepower output and Calculate button
+        JLabel estimateLabel = new JLabel("Estimated hp:");
+        container.add(estimateLabel);
         
-        JFormattedTextField wheelField = new JFormattedTextField(formatter);
-        wheelField.setEditable(false);
-        container.add(wheelField);
+        JFormattedTextField estimateField = new JFormattedTextField(formatter);
+        estimateField.setEditable(false);
+        container.add(estimateField);
         
-        container.add(new JLabel());
+        JLabel estimateOriginLabel = new JLabel();
+        container.add(estimateOriginLabel);
         
         JButton calculateButton = new JButton("Calculate");
         container.add(calculateButton);
@@ -111,11 +118,12 @@ public class UserInterface implements Runnable {
          */
         
         //Select Default Options
+        crank.doClick();
         rwd.doClick();
         manual.doClick();
         
         //Implement Calculate listener
-        ActionEventListener listener = new ActionEventListener(crankField, auto, fwd, rwd, wheelField);
+        ActionEventListener listener = new ActionEventListener(horsepowerField, crank, auto, fwd, rwd, estimateField, estimateOriginLabel);
         calculateButton.addActionListener(listener);
     }
 }

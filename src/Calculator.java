@@ -2,28 +2,29 @@
  * Class which performs calculations. 
  */
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
 public class Calculator {
 
-	private JFormattedTextField crankHorsepower;
-	private JRadioButton auto;
-	private JRadioButton fwd;
-	private JRadioButton rwd;
+	private JFormattedTextField horsepowerField, estimateField;
+	private JRadioButton crank, auto, fwd, rwd;
 	private Drivetrain selectedDrivetrain;
-	private JFormattedTextField wheelHorsepower;
+	private JLabel estimateOriginLabel;
 	private static final int AUTOMATIC_LOSS = 5;
 
 	/*
 	 * Constructor takes GUI input.
 	 */
-	public Calculator(JFormattedTextField crankHorsepower, JRadioButton auto, JRadioButton fwd, JRadioButton rwd,
-			JFormattedTextField wheelHorsepower) {
-		this.crankHorsepower = crankHorsepower;
+	public Calculator(JFormattedTextField horsepowerField, JRadioButton crank, JRadioButton auto, JRadioButton fwd, JRadioButton rwd,
+			JFormattedTextField estimateField, JLabel estimateOriginLabel) {
+		this.horsepowerField = horsepowerField;
+		this.crank = crank;
 		this.auto = auto;
 		this.fwd = fwd;
 		this.rwd = rwd;
-		this.wheelHorsepower = wheelHorsepower;
+		this.estimateField = estimateField;
+		this.estimateOriginLabel = estimateOriginLabel;
 	}
 
 	/*
@@ -32,15 +33,15 @@ public class Calculator {
 	public void calculate() {
 
 		//Empty crank HP = 0
-		if (crankHorsepower.getText().isEmpty()) {
-			crankHorsepower.setValue(0);
+		if (horsepowerField.getText().isEmpty()) {
+			horsepowerField.setValue(0);
 		}
 		
 		//Retrieve crank HP value
-		int crankHorsepowerValue = (int) crankHorsepower.getValue();
+		int horsepowerValue = (int) horsepowerField.getValue();
 		
 		//Set crank HP to 0 at minimum
-		crankHorsepowerValue = Math.max(0, crankHorsepowerValue);
+		horsepowerValue = Math.max(0, horsepowerValue);
 
 		//Determine selected driveTrain
 		//(We are assuming there is one as we select a default)
@@ -60,12 +61,20 @@ public class Calculator {
 			loss += AUTOMATIC_LOSS;
 		}
 		
-		//Calculate wheel HP by calculating and subtracting drivetrain losses.
-		double percentLoss = loss / 100.0;
-		double powerLost = percentLoss * crankHorsepowerValue;
-		double result = crankHorsepowerValue - powerLost;
-
+		double percentLoss, result;
+		if (crank.isSelected()){
+			//Calculate wheel HP by calculating and subtracting drivetrain losses.
+			percentLoss = loss / 100.0;
+			result = horsepowerValue - percentLoss * horsepowerValue;
+			this.estimateOriginLabel.setText(" at the wheels");
+		} else {
+			//Calculate crank HP by calculating and adding drivetrain losses.
+			percentLoss = 100.0 / (100 - loss);
+			result = percentLoss * horsepowerValue;
+			this.estimateOriginLabel.setText(" at the crank");
+		}
+		
 		//Return result to interface
-		this.wheelHorsepower.setValue(result);
+		this.estimateField.setValue(result);
 	}
 }
