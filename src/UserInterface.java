@@ -12,6 +12,11 @@ public class UserInterface implements Runnable {
 
     private JFrame frame;
     private double version;
+    private JFormattedTextField horsepowerField, estimateField;
+    private JRadioButton crank, wheel, fwd, rwd, awd, auto, manual;
+    private JLabel horsepowerLabel, driveTrainLabel, transmissionLabel, estimateLabel, estimateOriginLabel;
+    private ButtonGroup horsepowerGroup, drivetrainGroup, transmissionGroup;
+    private JButton calculateButton;
 
     public UserInterface(double version) {
 		this.version = version;
@@ -52,30 +57,30 @@ public class UserInterface implements Runnable {
          */
         
         //Row 1 - Horsepower input with crank/wheel radio buttons
-        JLabel horsepowerLabel = new JLabel("Horsepower:");
+        horsepowerLabel = new JLabel("Horsepower:");
         container.add(horsepowerLabel);
         
-        JFormattedTextField horsepowerField = new JFormattedTextField(formatter);
+        horsepowerField = new JFormattedTextField(formatter);
         container.add(horsepowerField);
         
-        JRadioButton crank = new JRadioButton("at the Crank");
-        JRadioButton wheel = new JRadioButton("at the Wheels");
+        crank = new JRadioButton("at the Crank");
+        wheel = new JRadioButton("at the Wheels");
 
-        ButtonGroup horsepowerGroup = new ButtonGroup();
+        horsepowerGroup = new ButtonGroup();
         horsepowerGroup.add(crank);
         horsepowerGroup.add(wheel);
         container.add(crank);
         container.add(wheel);
         
         //Row 2 - Drivetrain radio buttons
-        JLabel driveTrainLabel = new JLabel("Drivetrain:");
+        driveTrainLabel = new JLabel("Drivetrain:");
         container.add(driveTrainLabel);
         
-        JRadioButton fwd = new JRadioButton("FWD");
-        JRadioButton rwd = new JRadioButton("RWD");
-        JRadioButton awd = new JRadioButton("AWD");
+        fwd = new JRadioButton("FWD");
+        rwd = new JRadioButton("RWD");
+        awd = new JRadioButton("AWD");
 
-        ButtonGroup drivetrainGroup = new ButtonGroup();
+        drivetrainGroup = new ButtonGroup();
         drivetrainGroup.add(fwd);
         drivetrainGroup.add(rwd);
         drivetrainGroup.add(awd);
@@ -85,13 +90,13 @@ public class UserInterface implements Runnable {
         
         
         //Row 3 - Transmission radio buttons
-        JLabel transmissionLabel = new JLabel("Transmission:");
+        transmissionLabel = new JLabel("Transmission:");
         container.add(transmissionLabel);
         
-        JRadioButton auto = new JRadioButton("Automatic");
-        JRadioButton manual = new JRadioButton("Manual");
+        auto = new JRadioButton("Automatic");
+        manual = new JRadioButton("Manual");
 
-        ButtonGroup transmissionGroup = new ButtonGroup();
+        transmissionGroup = new ButtonGroup();
         transmissionGroup.add(auto);
         transmissionGroup.add(manual);
         container.add(auto);
@@ -100,17 +105,17 @@ public class UserInterface implements Runnable {
         container.add(new JLabel());
         
         //Row 4 - Horsepower output and Calculate button
-        JLabel estimateLabel = new JLabel("Estimated hp:");
+        estimateLabel = new JLabel("Estimated hp:");
         container.add(estimateLabel);
         
-        JFormattedTextField estimateField = new JFormattedTextField(formatter);
+        estimateField = new JFormattedTextField(formatter);
         estimateField.setEditable(false);
         container.add(estimateField);
         
-        JLabel estimateOriginLabel = new JLabel();
+        estimateOriginLabel = new JLabel();
         container.add(estimateOriginLabel);
         
-        JButton calculateButton = new JButton("Calculate");
+        calculateButton = new JButton("Calculate");
         container.add(calculateButton);
         
         /*
@@ -123,7 +128,48 @@ public class UserInterface implements Runnable {
         manual.doClick();
         
         //Implement Calculate listener
-        ActionEventListener listener = new ActionEventListener(horsepowerField, crank, auto, fwd, rwd, estimateField, estimateOriginLabel);
+        ActionEventListener listener = new ActionEventListener(this);
         calculateButton.addActionListener(listener);
     }
+    
+    /*
+     * Getters and Setters
+     */
+    
+    public String getHorsepower(){
+    	return horsepowerField.getText();
+    }
+    
+    public int getHorsepowerValue(){
+    	return (int) horsepowerField.getValue();
+    }
+    
+    public void setHorsepowerValue(int value){
+    	horsepowerField.setValue(value);
+    }
+    
+    public boolean isCrankValueGiven(){
+    	return crank.isSelected();
+    }
+    
+    public boolean isAuto(){
+    	return auto.isSelected();
+    }
+    
+    public boolean isFWD(){
+    	return fwd.isSelected();
+    }
+    
+    public boolean isRWD(){
+    	return rwd.isSelected();
+    }
+    
+    public void setEstimate(double value){
+    	estimateField.setValue(value);
+    }
+    
+    public void setEstimateOriginLabel(String value){
+    	estimateOriginLabel.setText(value);
+    }
+    
 }
