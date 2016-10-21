@@ -58,6 +58,7 @@ public class UserInterface implements Runnable {
         
         //Row 1 - Horsepower input with crank/wheel radio buttons
         horsepowerLabel = new JLabel("Horsepower:");
+        horsepowerLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         container.add(horsepowerLabel);
         
         horsepowerField = new JFormattedTextField(formatter);
@@ -74,6 +75,7 @@ public class UserInterface implements Runnable {
         
         //Row 2 - Drivetrain radio buttons
         driveTrainLabel = new JLabel("Drivetrain:");
+        driveTrainLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         container.add(driveTrainLabel);
         
         fwd = new JRadioButton("FWD");
@@ -91,6 +93,7 @@ public class UserInterface implements Runnable {
         
         //Row 3 - Transmission radio buttons
         transmissionLabel = new JLabel("Transmission:");
+        transmissionLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         container.add(transmissionLabel);
         
         auto = new JRadioButton("Automatic");
@@ -106,6 +109,7 @@ public class UserInterface implements Runnable {
         
         //Row 4 - Horsepower output and Calculate button
         estimateLabel = new JLabel("Estimated hp:");
+        estimateLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         container.add(estimateLabel);
         
         estimateField = new JFormattedTextField(formatter);
